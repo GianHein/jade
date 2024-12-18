@@ -15,10 +15,6 @@ public class Window {
     private long glfwWindow;
 
     private float red = 1.0f;
-    private float green = 1.0f;
-    private float blue = 1.0f;
-    private float alpha = 1.0f;
-
     private boolean fadeToBlack = false;
 
     private static Window window = null;
@@ -78,7 +74,7 @@ public class Window {
         while(!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
-            glClearColor(red, green, blue, alpha);
+            glClearColor(red, 0.0f, 0.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
@@ -87,12 +83,8 @@ public class Window {
 
             if (fadeToBlack) {
                 if (red > 0) red -= 0.01f;
-                if (green > 0) green -= 0.01f;
-                if (blue > 0) blue -= 0.01f;
             } else {
                 if (red < 1) red += 0.01f;
-                if (green < 1) green += 0.01f;
-                if (blue < 1) blue += 0.01f;
             }
 
             glfwSwapBuffers(glfwWindow);
