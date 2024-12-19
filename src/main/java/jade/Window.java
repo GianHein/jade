@@ -3,6 +3,7 @@ package jade;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import util.Time;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -14,15 +15,34 @@ public class Window {
     private String title;
     private long glfwWindow;
 
-    private float red = 1.0f;
+    public float red, green, blue, alpha;
     private boolean fadeToBlack = false;
 
     private static Window window = null;
+    private static Scene currentScene;
 
     private Window() {
         this.width = 1080;
         this.height = 720;
         this.title = "Jade Engine";
+        this.red = 1.0f;
+        this.green = 0.0f;
+        this.blue = 0.0f;
+        this.alpha = 1.0f;
+    }
+
+    public static void changeScene(int newScene) {
+        switch (newScene) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+                break;
+            default:
+                assert false : "Unknown scene '" + newScene + "'";
+                break;
+        }
     }
 
     public static Window get() {
@@ -62,32 +82,35 @@ public class Window {
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
 
         glfwMakeContextCurrent(glfwWindow);
+        // Enable v-sync
         glfwSwapInterval(1);
 
         glfwShowWindow(glfwWindow);
 
         // Critical for LWJGL bindings for OpenGL to work
         GL.createCapabilities();
+
+        Window.changeScene(0);
     }
 
     public void loop() {
+        float beginTime = Time.getTime();
+        float endTime;
+        float deltaTime = -1.0f;
+
         while(!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
-            glClearColor(red, 0.0f, 0.0f, 0.0f);
+            glClearColor(red, green, blue, alpha);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
-                fadeToBlack = !fadeToBlack;
-            }
-
-            if (fadeToBlack) {
-                if (red > 0) red -= 0.01f;
-            } else {
-                if (red < 1) red += 0.01f;
-            }
+            if (deltaTime >= 0) currentScene.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
+
+            endTime = Time.getTime();
+            deltaTime = endTime - beginTime;
+            beginTime = endTime;
         }
     }
 }
