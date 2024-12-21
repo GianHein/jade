@@ -26,8 +26,8 @@ public class Window {
         this.height = 720;
         this.title = "Jade Engine";
         this.red = 1.0f;
-        this.green = 0.0f;
-        this.blue = 0.0f;
+        this.green = 1.0f;
+        this.blue = 1.0f;
         this.alpha = 1.0f;
     }
 
@@ -35,9 +35,11 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
+                currentScene.init();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false : "Unknown scene '" + newScene + "'";
