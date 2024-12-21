@@ -22,7 +22,7 @@ public class Window {
     private static Scene currentScene;
 
     private Window() {
-        this.width = 1080;
+        this.width = 1280;
         this.height = 720;
         this.title = "Jade Engine";
         this.red = 1.0f;
