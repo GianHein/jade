@@ -9,11 +9,11 @@ uniform mat4 uniformProjection;
 uniform mat4 uniformView;
 
 out vec4 fragmentColor;
-out vec2 fragementTextureCoordinates;
+out vec2 fragmentTextureCoordinates;
 
 void main() {
     fragmentColor = attributeColor;
-    fragementTextureCoordinates = attributeTextureCoordinates;
+    fragmentTextureCoordinates = attributeTextureCoordinates;
     gl_Position = uniformProjection * uniformView * vec4(attributePosition, 1.0);
 }
 

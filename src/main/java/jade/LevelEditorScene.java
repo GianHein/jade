@@ -109,7 +109,6 @@ public class LevelEditorScene extends Scene {
         glDisableVertexAttribArray(1);
 
         glBindVertexArray(0);
-        glBindVertexArray(0);
 
         defaultShader.detach();
     }
