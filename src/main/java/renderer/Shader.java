@@ -117,7 +117,12 @@ public class Shader {
         beingUsed = false;
     }
 
+    private boolean containsVariable(String variableName) {
+        return vertexSource.contains(variableName) || fragmentSource.contains(variableName);
+    }
+
     public void uploadMat3f(String variableName, Matrix3f matrix3f) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing matrix3f uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(9);
@@ -126,6 +131,7 @@ public class Shader {
     }
 
     public void uploadMat4f(String variableName, Matrix4f matrix4f) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing matrix4f uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
@@ -134,36 +140,42 @@ public class Shader {
     }
 
     public void uploadVec2f(String variableName, Vector2f vector2f) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing vector2f uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform2f(variableLocation, vector2f.x, vector2f.y);
     }
 
     public void uploadVec3f(String variableName, Vector3f vector3f) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing vector3f uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform3f(variableLocation, vector3f.x, vector3f.y, vector3f.z);
     }
 
     public void uploadVec4f(String variableName, Vector4f vector4f) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing vector4f uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform4f(variableLocation, vector4f.x, vector4f.y, vector4f.z, vector4f.w);
     }
 
     public void uploadFloat(String variableName, float value) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing float uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform1f(variableLocation, value);
     }
 
     public void uploadInt(String variableName, int value) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing int uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform1i(variableLocation, value);
     }
 
     public void uploadTexture(String variableName, int slot) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing texture uniform '" + variableName + "' to shader '" + filepath + "'";
         int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
         use();
         glUniform1i(variableLocation, slot);
