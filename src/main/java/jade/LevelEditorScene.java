@@ -12,7 +12,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        this.camera = new Camera(new Vector2f(-250, 0));
+        this.camera = new Camera(new Vector2f(0, 0));
 
         int xOffset = 10;
         int yOffset = 10;
@@ -21,12 +21,11 @@ public class LevelEditorScene extends Scene {
         float totalHeight = (float)(300 - yOffset * 2);
         float sizeX = totalWidth / 100.0f;
         float sizeY = totalHeight / 100.0f;
-        float padding = 3;
 
         for (int x = 0; x < 100; x++) {
             for (int y = 0; y < 100; y++) {
-                float xPos = xOffset + (x * sizeX) + (x * padding);
-                float yPos = yOffset + (y * sizeY) + (y * padding);
+                float xPos = xOffset + (x * sizeX);
+                float yPos = yOffset + (y * sizeY);
 
                 GameObject gameObject = new GameObject("Obj(" + x + "," + y + ")", new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
                 gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
