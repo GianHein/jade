@@ -2,8 +2,12 @@ package renderer;
 
 import components.SpriteRenderer;
 import jade.Window;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import util.AssetPool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -13,17 +17,24 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class RenderBatch {
     private final int POS_SIZE = 2;
     private final int COLOR_SIZE = 4;
+    private final int TEXTURE_COORDINATES_SIZE = 2;
+    private final int TEXTURE_ID_SIZE = 1;
 
     private final int POS_OFFSET = 0;
     private final int COLOR_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
+    private final int TEXTURE_COORDINATES_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    private final int TEXTURE_ID_OFFSET = TEXTURE_COORDINATES_OFFSET + TEXTURE_COORDINATES_SIZE * Float.BYTES;
 
-    private final int VERTEX_SIZE = 6;
+    private final int VERTEX_SIZE = 9;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
     private SpriteRenderer[] sprites;
     private int numSprites;
     private boolean hasRoom;
     private float[] vertices;
+    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+
+    private List<Texture> textures;
 
     private int vaoID, vboID;
     private int maxBatchSize;
@@ -40,6 +51,7 @@ public class RenderBatch {
 
         this.numSprites = 0;
         this.hasRoom = true;
+        this.textures = new ArrayList<>();
     }
 
     public void start() {
@@ -64,6 +76,12 @@ public class RenderBatch {
 
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, TEXTURE_COORDINATES_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_COORDINATES_OFFSET);
+        glEnableVertexAttribArray(2);
+
+        glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
+        glEnableVertexAttribArray(3);
     }
 
     private int[] generateIndices() {
@@ -82,6 +100,8 @@ public class RenderBatch {
        this.sprites[index] = spriteRenderer;
        this.numSprites++;
 
+       if (spriteRenderer.getTexture() != null && !textures.contains(spriteRenderer.getTexture())) textures.add(spriteRenderer.getTexture());
+
        // Add properties to local vertices array
        loadVertexProperties(index);
 
@@ -98,6 +118,13 @@ public class RenderBatch {
         shader.uploadMat4f("uniformProjection", Window.getScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uniformView", Window.getScene().getCamera().getViewMatrix());
 
+        for (int i = 0; i < textures.size(); i ++) {
+            glActiveTexture(GL_TEXTURE0 + i + 1);
+            textures.get(i).bind();
+        }
+
+        shader.uploadIntArray("uniformTextures", textureSlots);
+
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -107,6 +134,11 @@ public class RenderBatch {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
+
+        for (int i = 0; i < textures.size(); i ++) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            textures.get(i).unbind();
+        }
 
         shader.detach();
     }
@@ -118,6 +150,17 @@ public class RenderBatch {
         int offset = index * 4 * VERTEX_SIZE;
 
         Vector4f color = spriteRenderer.getColor();
+        Vector2f[] textureCoordinates = spriteRenderer.getTextureCoordinates();
+
+        int textureID = 0;
+        if (spriteRenderer.getTexture() != null) {
+            for (int i = 0; i < textures.size(); i++) {
+                if (textures.get(i) == spriteRenderer.getTexture()) {
+                    textureID = i + 1;
+                    break;
+                }
+            }
+        }
 
         // Add vertices with appropriate properties
         float xAdd = 1.0f;
@@ -137,6 +180,13 @@ public class RenderBatch {
             vertices[offset + 3] = color.y;
             vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
+
+            // Load texture coordinates
+            vertices[offset + 6] = textureCoordinates[i].x;
+            vertices[offset + 7] = textureCoordinates[i].y;
+
+            // Load texture id
+            vertices[offset + 8] = textureID;
 
             offset += VERTEX_SIZE;
         }

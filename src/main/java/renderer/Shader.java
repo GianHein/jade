@@ -180,4 +180,11 @@ public class Shader {
         use();
         glUniform1i(variableLocation, slot);
     }
+
+    public void uploadIntArray(String variableName, int[] array) {
+        assert containsVariable(variableName) : "Error: Trying to upload non-existing int array uniform '" + variableName + "' to shader '" + filepath + "'";
+        int variableLocation = glGetUniformLocation(shaderProgramID, variableName);
+        use();
+        glUniform1iv(variableLocation, array);
+    }
 }
