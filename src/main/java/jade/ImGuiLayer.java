@@ -1,11 +1,10 @@
 package jade;
 
+import imgui.ImFontAtlas;
+import imgui.ImFontConfig;
 import imgui.ImGui;
 import imgui.ImGuiIO;
-import imgui.flag.ImGuiBackendFlags;
-import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiKey;
-import imgui.flag.ImGuiMouseCursor;
+import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.callback.ImStrSupplier;
@@ -32,7 +31,7 @@ public class ImGuiLayer {
         ImGui.createContext();
         ImGuiIO io = ImGui.getIO();
 
-        io.setIniFilename(null);
+        io.setIniFilename("imgui.ini");
         io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
         io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors);
         io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
@@ -129,16 +128,39 @@ public class ImGuiLayer {
 //            }
 //        });
 
+        // ------------------------------------------------------------
+        // Fonts configuration
+        // Read: https://raw.githubusercontent.com/ocornut/imgui/master/docs/FONTS.txt
+
+        final ImFontAtlas fontAtlas = io.getFonts();
+        final ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
+
+        // Glyphs could be added per-font as well as per config used globally like here
+        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
+
+        // Fonts merge example
+        fontConfig.setPixelSnapH(true);
+        fontAtlas.addFontFromFileTTF("assets/fonts/JetBrainsMono-Regular.ttf", 16, fontConfig);
+
+        fontConfig.destroy(); // After all fonts were added we don't need this config more
+
+        // ------------------------------------------------------------
+        // Use freetype instead of stb_truetype to build a fonts texture
+        fontAtlas.setFlags(ImGuiFreeTypeBuilderFlags.LightHinting);
+        fontAtlas.build();
+
         imGuiGlfw.init(glfwWindow, true);
         imGuiGl3.init("#version 330 core");
     }
 
-    public void updateImGui(float deltaTime) {
+    public void updateImGui(float deltaTime, Scene currentScene) {
         startFrame(deltaTime);
 
         imGuiGlfw.newFrame();
         ImGui.newFrame();
+        currentScene.sceneImgui();
         ImGui.showDemoWindow();
+
         ImGui.render();
 
         endImGuiFrame();

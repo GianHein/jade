@@ -65,6 +65,12 @@ public class GameObject {
         }
     }
 
+    public void imgui() {
+        for (Component component : components) {
+            component.imgui();
+        }
+    }
+
     public int zIndex() {
         return this.zIndex;
     }

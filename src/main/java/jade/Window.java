@@ -124,7 +124,7 @@ public class Window {
 
             if (deltaTime >= 0) currentScene.update(deltaTime);
 
-            this.imGuiLayer.updateImGui(deltaTime);
+            this.imGuiLayer.updateImGui(deltaTime, currentScene);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float)glfwGetTime();
