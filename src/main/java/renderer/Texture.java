@@ -13,7 +13,11 @@ public class Texture {
     private int textureID;
     private int widht, height;
 
-    public Texture(String filepath) {
+//    public Texture(String filepath) {
+//
+//    }
+
+    public void init(String filepath) {
         this.filepath = filepath;
 
         // Generate texture on GPU
@@ -51,6 +55,7 @@ public class Texture {
         assert image != null : "Error: (Texture) Could not load image '" + filepath + "'";
 
         stbi_image_free(image);
+
     }
 
     public void bind() {

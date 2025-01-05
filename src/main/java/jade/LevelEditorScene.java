@@ -1,16 +1,21 @@
 package jade;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import components.Sprite;
 import components.SpriteRenderer;
 import components.Spritesheet;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.lwjgl.system.CallbackI;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
 
     private GameObject object1;
+
+    private SpriteRenderer object1SpriteRenderer;
 
     public LevelEditorScene() {
 
@@ -23,13 +28,26 @@ public class LevelEditorScene extends Scene {
         this.camera = new Camera(new Vector2f(0, 0));
 
         object1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        object1.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
+        object1SpriteRenderer = new SpriteRenderer();
+        object1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
+        object1.addComponent(object1SpriteRenderer);
         this.addGameObjectToScene(object1);
         this.activeGameObject = object1;
 
         GameObject object2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        object2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/blendImage2.png"))));
+        SpriteRenderer object2SpriteRenderer = new SpriteRenderer();
+        Sprite object2Sprite = new Sprite();
+        object2Sprite.setTexture(AssetPool.getTexture("assets/images/blendImage2.png"));
+        object2SpriteRenderer.setSprite(object2Sprite);
+        object2.addComponent(object2SpriteRenderer);
         this.addGameObjectToScene(object2);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String serialized = gson.toJson(object1);
+        System.out.println(serialized);
+        GameObject go = gson.fromJson(serialized, GameObject.class);
+        System.out.println(go);
     }
 
     private void loadResources() {
@@ -39,7 +57,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float deltaTime) {
-        System.out.println("FPS: " + 1.0f / deltaTime);
+//        System.out.println("FPS: " + 1.0f / deltaTime);
 
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(deltaTime);

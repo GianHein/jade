@@ -1,7 +1,7 @@
 package jade;
 
 public abstract class Component {
-    public GameObject gameObject;
+    public transient GameObject gameObject;
 
     public void start() {}
 
