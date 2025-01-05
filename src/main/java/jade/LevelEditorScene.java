@@ -27,6 +27,8 @@ public class LevelEditorScene extends Scene {
 
         this.camera = new Camera(new Vector2f(0, 0));
 
+        if (loadedLevel) return;
+
         object1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
         object1SpriteRenderer = new SpriteRenderer();
         object1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
@@ -41,13 +43,6 @@ public class LevelEditorScene extends Scene {
         object2SpriteRenderer.setSprite(object2Sprite);
         object2.addComponent(object2SpriteRenderer);
         this.addGameObjectToScene(object2);
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        String serialized = gson.toJson(object1);
-        System.out.println(serialized);
-        GameObject go = gson.fromJson(serialized, GameObject.class);
-        System.out.println(go);
     }
 
     private void loadResources() {

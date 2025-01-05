@@ -116,6 +116,8 @@ public class Window {
         float endTime;
         float deltaTime = -1.0f;
 
+        currentScene.load();
+
         while(!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
@@ -131,6 +133,8 @@ public class Window {
             deltaTime = endTime - beginTime;
             beginTime = endTime;
         }
+
+        currentScene.saveExit();
     }
 
     public static int getWidth() {
