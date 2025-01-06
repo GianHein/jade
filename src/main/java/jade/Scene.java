@@ -66,6 +66,7 @@ public abstract class Scene {
 
     }
 
+
     public void saveExit() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -74,10 +75,10 @@ public abstract class Scene {
                 .create();
 
         try {
-            Writer writer = new FileWriter("level.txt");
+            FileWriter writer = new FileWriter("level.txt");
             writer.write(gson.toJson(this.gameObjects));
             writer.close();
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +91,6 @@ public abstract class Scene {
                 .create();
 
         String inFile = "";
-
         try {
             inFile = new String(Files.readAllBytes(Paths.get("level.txt")));
         } catch (IOException e) {
@@ -98,12 +98,10 @@ public abstract class Scene {
         }
 
         if (!inFile.equals("")) {
-            GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
-
-            for (GameObject object : objects) {
-                this.addGameObjectToScene(object);
+            GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
+            for (int i=0; i < objs.length; i++) {
+                addGameObjectToScene(objs[i]);
             }
-
             this.loadedLevel = true;
         }
     }
