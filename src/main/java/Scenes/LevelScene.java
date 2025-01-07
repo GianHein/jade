@@ -1,7 +1,9 @@
-package jade;
+package Scenes;
+
+import jade.Window;
 
 public class LevelScene extends Scene {
-    LevelScene() {
+    public LevelScene() {
         System.out.println("Inside LevelScene");
     }
 

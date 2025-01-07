@@ -1,24 +1,20 @@
-package jade;
+package Scenes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import components.Rigidbody;
-import components.Sprite;
-import components.SpriteRenderer;
-import components.Spritesheet;
+import components.*;
 import imgui.ImGui;
 import imgui.ImVec2;
+import jade.*;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.system.CallbackI;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
 
     private GameObject object1;
-
-    private SpriteRenderer object1SpriteRenderer;
     private Spritesheet sprites;
+    private SpriteRenderer object1SpriteRenderer;
+
+    MouseControls mouseControls = new MouseControls();
 
     public LevelEditorScene() {
 
@@ -61,6 +57,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float deltaTime) {
+        mouseControls.update(deltaTime);
 //        System.out.println("FPS: " + 1.0f / deltaTime);
         MouseListener.getOrthoX();
 
@@ -94,7 +91,8 @@ public class LevelEditorScene extends Scene {
 
             ImGui.pushID(i);
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, textureCoordinates[0].x, textureCoordinates[0].y, textureCoordinates[2].x, textureCoordinates[2].y)) {
-                System.out.println("Button " + i + " clicked");
+                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
+                mouseControls.pickupObject(object);
             }
             ImGui.popID();
 

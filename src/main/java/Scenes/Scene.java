@@ -1,9 +1,14 @@
-package jade;
+package Scenes;
 
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import components.Component;
+import components.ComponentDeserializer;
 import imgui.ImGui;
+import jade.Camera;
+import jade.GameObject;
+import jade.GameObjectDeserializer;
 import renderer.Renderer;
 
 import java.io.*;
@@ -98,10 +103,24 @@ public abstract class Scene {
         }
 
         if (!inFile.equals("")) {
+            int maxGameObjectId = -1;
+            int maxComponentId = -1;
+
             GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
             for (int i=0; i < objs.length; i++) {
                 addGameObjectToScene(objs[i]);
+
+                for (Component component : objs[i].getAllComponents()) {
+                    if (component.getUid() > maxComponentId) maxComponentId = component.getUid();
+                }
+
+                if (objs[i].getUid() > maxGameObjectId) maxGameObjectId = objs[i].getUid();
             }
+
+            maxComponentId++;
+            maxGameObjectId++;
+            GameObject.init(maxGameObjectId);
+            Component.init(maxComponentId);
             this.loadedLevel = true;
         }
     }
