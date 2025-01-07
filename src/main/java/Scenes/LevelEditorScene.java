@@ -5,7 +5,9 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import jade.*;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
+import renderer.DebugDraw;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
@@ -55,11 +57,18 @@ public class LevelEditorScene extends Scene {
         AssetPool.getTexture("assets/images/blendImage2.png");
     }
 
+    float t = 0.0f;
     @Override
     public void update(float deltaTime) {
         mouseControls.update(deltaTime);
 //        System.out.println("FPS: " + 1.0f / deltaTime);
-        MouseListener.getOrthoX();
+
+        float x = ((float)Math.sin(t) * 200.0f) + 600;
+        float y = ((float)Math.cos(t) * 200.0f) + 400;
+
+        t += 0.05f;
+
+        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), new Vector3f(0, 0, 1));
 
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(deltaTime);
@@ -71,7 +80,6 @@ public class LevelEditorScene extends Scene {
     @Override
     public void imgui() {
         ImGui.begin("Test window");
-
 
         ImVec2 windowPosition = new ImVec2();
         ImGui.getWindowPos(windowPosition);
@@ -105,8 +113,6 @@ public class LevelEditorScene extends Scene {
                 ImGui.sameLine();
             }
         }
-
-
 
         ImGui.end();
     }

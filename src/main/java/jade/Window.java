@@ -6,6 +6,7 @@ import Scenes.Scene;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import renderer.DebugDraw;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -121,10 +122,15 @@ public class Window {
         while(!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
+            DebugDraw.beginFrame();
+
             glClearColor(red, green, blue, alpha);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if (deltaTime >= 0) currentScene.update(deltaTime);
+            if (deltaTime >= 0) {
+                DebugDraw.draw();
+                currentScene.update(deltaTime);
+            }
 
             this.imGuiLayer.updateImGui(deltaTime, currentScene);
             glfwSwapBuffers(glfwWindow);
