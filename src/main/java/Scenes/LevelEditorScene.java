@@ -16,7 +16,7 @@ public class LevelEditorScene extends Scene {
     private Spritesheet sprites;
     private SpriteRenderer object1SpriteRenderer;
 
-    MouseControls mouseControls = new MouseControls();
+    GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
 
     public LevelEditorScene() {
 
@@ -24,6 +24,9 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        levelEditorStuff.addComponent(new MouseControls());
+        levelEditorStuff.addComponent(new GridLines());
+
         loadResources();
 
         this.camera = new Camera(new Vector2f(-250, 0));
@@ -33,22 +36,6 @@ public class LevelEditorScene extends Scene {
             this.activeGameObject = gameObjects.get(0);
             return;
         }
-
-        object1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        object1SpriteRenderer = new SpriteRenderer();
-        object1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
-        object1.addComponent(object1SpriteRenderer);
-        object1.addComponent(new Rigidbody());
-        this.addGameObjectToScene(object1);
-        this.activeGameObject = object1;
-
-        GameObject object2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        SpriteRenderer object2SpriteRenderer = new SpriteRenderer();
-        Sprite object2Sprite = new Sprite();
-        object2Sprite.setTexture(AssetPool.getTexture("assets/images/blendImage2.png"));
-        object2SpriteRenderer.setSprite(object2Sprite);
-        object2.addComponent(object2SpriteRenderer);
-        this.addGameObjectToScene(object2);
     }
 
     private void loadResources() {
@@ -57,18 +44,10 @@ public class LevelEditorScene extends Scene {
         AssetPool.getTexture("assets/images/blendImage2.png");
     }
 
-    float t = 0.0f;
     @Override
     public void update(float deltaTime) {
-        mouseControls.update(deltaTime);
+        levelEditorStuff.update(deltaTime);
 //        System.out.println("FPS: " + 1.0f / deltaTime);
-
-        float x = ((float)Math.sin(t) * 200.0f) + 600;
-        float y = ((float)Math.cos(t) * 200.0f) + 400;
-
-        t += 0.05f;
-
-        DebugDraw.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), new Vector3f(0, 0, 1));
 
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(deltaTime);
@@ -98,9 +77,9 @@ public class LevelEditorScene extends Scene {
             Vector2f[] textureCoordinates = sprite.getTextureCoordinates();
 
             ImGui.pushID(i);
-            if (ImGui.imageButton(id, spriteWidth, spriteHeight, textureCoordinates[0].x, textureCoordinates[0].y, textureCoordinates[2].x, textureCoordinates[2].y)) {
-                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
-                mouseControls.pickupObject(object);
+            if (ImGui.imageButton(id, spriteWidth, spriteHeight, textureCoordinates[2].x, textureCoordinates[0].y, textureCoordinates[0].x, textureCoordinates[2].y)) {
+                GameObject object = Prefabs.generateSpriteObject(sprite, 32, 32);
+                levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
             }
             ImGui.popID();
 

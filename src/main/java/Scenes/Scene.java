@@ -99,7 +99,7 @@ public abstract class Scene {
         try {
             inFile = new String(Files.readAllBytes(Paths.get("level.txt")));
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
 
         if (!inFile.equals("")) {
