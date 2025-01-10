@@ -17,8 +17,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -74,8 +73,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -131,8 +129,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -188,8 +185,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -245,8 +241,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -302,8 +297,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -359,8 +353,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -416,8 +409,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -473,8 +465,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -530,8 +521,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -587,8 +577,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -644,8 +633,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -701,8 +689,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -758,8 +745,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -815,8 +801,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -872,8 +857,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -929,8 +913,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -986,8 +969,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1043,8 +1025,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1100,8 +1081,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1157,8 +1137,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1214,8 +1193,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1271,8 +1249,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1328,8 +1305,7 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
-              "width": 0,
+              "width": 112,
               "height": 192
             },
             "textureCoordinates": [
@@ -1385,7 +1361,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -1442,7 +1417,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },

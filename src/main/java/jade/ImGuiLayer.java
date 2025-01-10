@@ -8,6 +8,7 @@ import imgui.ImGuiIO;
 import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
+import imgui.type.ImBoolean;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -32,6 +33,7 @@ public class ImGuiLayer {
 
         io.setIniFilename("imgui.ini");
         io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
+        io.setConfigFlags(ImGuiConfigFlags.DockingEnable);
         io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors);
         io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
         io.setBackendPlatformName("imgui_java_impl_glfw");
@@ -66,9 +68,10 @@ public class ImGuiLayer {
 
         imGuiGlfw.newFrame();
         ImGui.newFrame();
+        setupDockspace();
         currentScene.sceneImgui();
         ImGui.showDemoWindow();
-
+        // ImGui.end();
         ImGui.render();
 
         endImGuiFrame();
@@ -111,5 +114,22 @@ public class ImGuiLayer {
         imGuiGl3.dispose();
         imGuiGlfw.dispose();
         ImGui.destroyContext();
+    }
+
+    private void setupDockspace() {
+//        int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
+//        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
+//        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
+//        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+//        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+//        windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |
+//                ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
+//                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+//        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+//        ImGui.popStyleVar(2);
+//        // Dockspace
+//        ImGui.dockSpace(ImGui.getID("Dockspace"));
+
+        ImGui.dockSpaceOverViewport(ImGui.getMainViewport());
     }
 }
