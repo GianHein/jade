@@ -22,4 +22,4 @@ I move on to C++ and OpenGL.
 
 ## Project Progress
 
-I have completed watching and coding along with the first 25 episodes of the series.
+I have completed watching and coding along with the first 27 episodes of the series.
