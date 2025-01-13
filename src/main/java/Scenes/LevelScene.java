@@ -13,4 +13,8 @@ public class LevelScene extends Scene {
         Window.get().green = 1.0f;
         Window.get().blue = 1.0f;
     }
+
+    @Override
+    public void render() {
+    }
 }

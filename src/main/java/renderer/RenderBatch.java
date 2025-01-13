@@ -20,13 +20,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
     private final int COLOR_SIZE = 4;
     private final int TEXTURE_COORDINATES_SIZE = 2;
     private final int TEXTURE_ID_SIZE = 1;
+    private final int ENTITY_ID_SIZE = 1;
 
     private final int POS_OFFSET = 0;
     private final int COLOR_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
     private final int TEXTURE_COORDINATES_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDINATES_OFFSET + TEXTURE_COORDINATES_SIZE * Float.BYTES;
+    private final int ENTITY_ID_OFFSET = TEXTURE_ID_OFFSET + TEXTURE_ID_SIZE * Float.BYTES;
 
-    private final int VERTEX_SIZE = 9;
+    private final int VERTEX_SIZE = 10;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
     private SpriteRenderer[] sprites;
@@ -39,13 +41,10 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     private int vaoID, vboID;
     private int maxBatchSize;
-    private Shader shader;
     private int zIndex;
 
 
     public RenderBatch(int maxBatchSize, int zIndex) {
-        shader = AssetPool.getShader("assets/shaders/default.glsl");
-
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
@@ -85,6 +84,9 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
         glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
         glEnableVertexAttribArray(3);
+
+        glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
+        glEnableVertexAttribArray(4);
     }
 
     private int[] generateIndices() {
@@ -130,7 +132,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
         }
 
         // Use shader
-        shader.use();
+        Shader shader = Renderer.getBoundShader();
         shader.uploadMat4f("uniformProjection", Window.getScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uniformView", Window.getScene().getCamera().getViewMatrix());
 
@@ -203,6 +205,9 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
             // Load texture id
             vertices[offset + 8] = textureID;
+
+            // Load entity id
+            vertices[offset + 9] = spriteRenderer.gameObject.getUid() + 1;
 
             offset += VERTEX_SIZE;
         }

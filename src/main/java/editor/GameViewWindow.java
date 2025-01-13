@@ -9,6 +9,8 @@ import org.joml.Vector2f;
 
 public class GameViewWindow {
 
+    private static float leftX, rightX, topY, bottomY;
+
     public static void imgui() {
         ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
 
@@ -21,6 +23,10 @@ public class GameViewWindow {
         ImGui.getCursorScreenPos(topLeft);
         topLeft.x -= ImGui.getScrollX();
         topLeft.y -= ImGui.getScrollY();
+        leftX = topLeft.x;
+        bottomY = topLeft.y;
+        rightX = topLeft.x + windowSize.x;
+        topY = topLeft.y + windowSize.y;
 
         int textureId = Window.getFrameBuffer().getTextureId();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);

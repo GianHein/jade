@@ -95,9 +95,23 @@ public class MouseListener {
         return false;
     }
 
+    public static float getScreenX() {
+        float currentX = getX() - gameViewportPos.x;
+        currentX = (currentX / gameViewportSize.x) * 2560.0f;
+
+        return currentX;
+    }
+
+    public static float getScreenY() {
+        float currentY = getY() - gameViewportPos.y;
+        currentY = 1440.0f-((currentY / gameViewportSize.y) * 1440.0f);
+
+        return currentY;
+    }
+
     public static float getOrthoX() {
-        float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().gameViewportSize.x * 2.0f - 1.0f);
+        float currentX = getX() - gameViewportPos.x;
+        currentX = (currentX / gameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temporary = new Vector4f(currentX, 0, 0, 1);
 
         Matrix4f viewProjection = new Matrix4f();
@@ -110,7 +124,7 @@ public class MouseListener {
 
     public static float getOrthoY() {
         float currentY = getY() - gameViewportPos.y;
-        currentY = -((currentY / gameViewportSize.y * 2.0f - 1.0f));
+        currentY = -((currentY / gameViewportSize.y) * 2.0f - 1.0f);
         Vector4f temporary = new Vector4f(0, currentY, 0, 1);
 
         Matrix4f viewProjection = new Matrix4f();
@@ -121,11 +135,11 @@ public class MouseListener {
         return currentY;
     }
 
-    public static void setGameViewportSize(Vector2f gameViewportSize) {
-        MouseListener.gameViewportSize.set(gameViewportSize);
-    }
-
     public static void setGameViewportPos(Vector2f gameViewportPos) {
         MouseListener.gameViewportPos.set(gameViewportPos);
+    }
+
+    public static void setGameViewportSize(Vector2f gameViewportSize) {
+        MouseListener.gameViewportSize.set(gameViewportSize);
     }
 }

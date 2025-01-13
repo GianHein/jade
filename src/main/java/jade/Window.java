@@ -6,8 +6,8 @@ import Scenes.Scene;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import renderer.DebugDraw;
-import renderer.FrameBuffer;
+import renderer.*;
+import util.AssetPool;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -20,6 +20,7 @@ public class Window {
     private long glfwWindow;
     private ImGuiLayer imGuiLayer;
     private FrameBuffer frameBuffer;
+    private PickingTexture pickingTexture;
 
     public float red, green, blue, alpha;
 
@@ -114,6 +115,7 @@ public class Window {
         this.imGuiLayer.initImGui();
 
         this.frameBuffer = new FrameBuffer(2560, 1440);
+        this.pickingTexture = new PickingTexture(2560, 1440);
         glViewport(0, 0, 2560, 1440);
 
         Window.changeScene(0);
@@ -124,8 +126,30 @@ public class Window {
         float endTime;
         float deltaTime = -1.0f;
 
+        Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
+        Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+
         while(!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
+
+            glDisable(GL_BLEND);
+            pickingTexture.enableWriting();
+
+            glViewport(0, 0, 2560, 1440);
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            Renderer.bindShader(pickingShader);
+            currentScene.render();
+
+            if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+                int x = (int)MouseListener.getScreenX();
+                int y = (int)MouseListener.getScreenY();
+                System.out.println(pickingTexture.readPixel(x, y));
+            }
+
+            pickingTexture.disableWriting();
+            glEnable(GL_BLEND);
 
             DebugDraw.beginFrame();
 
@@ -136,7 +160,9 @@ public class Window {
 
             if (deltaTime >= 0) {
                 DebugDraw.draw();
+                Renderer.bindShader(defaultShader);
                 currentScene.update(deltaTime);
+                currentScene.render();
             }
 
             this.frameBuffer.unbind();
