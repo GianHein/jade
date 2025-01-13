@@ -3,7 +3,9 @@ package editor;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
+import jade.MouseListener;
 import jade.Window;
+import org.joml.Vector2f;
 
 public class GameViewWindow {
 
@@ -14,8 +16,17 @@ public class GameViewWindow {
         ImVec2 windowPosition = getCenteredPositionForViewport(windowSize);
 
         ImGui.setCursorPos(windowPosition.x, windowPosition.y);
+
+        ImVec2 topLeft = new ImVec2();
+        ImGui.getCursorScreenPos(topLeft);
+        topLeft.x -= ImGui.getScrollX();
+        topLeft.y -= ImGui.getScrollY();
+
         int textureId = Window.getFrameBuffer().getTextureId();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
+
+        MouseListener.setGameViewportPos(new Vector2f(topLeft.x, topLeft.y));
+        MouseListener.setGameViewportSize(new Vector2f(windowSize.x, windowSize.y));
 
         ImGui.end();
     }
