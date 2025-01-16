@@ -37,9 +37,21 @@ out vec3 color;
 
 void main() {
     vec4 textureColor = vec4(1, 1, 1, 1);
+
     if (fragmentTextureID > 0) {
         int id = int(fragmentTextureID);
-        textureColor = fragmentColor * texture(uniformTextures[id], fragmentTextureCoordinates);
+        switch(int(fragmentTextureID)) {
+            case 0: textureColor = fragmentColor * texture(uniformTextures[0], fragmentTextureCoordinates); break;
+            case 1: textureColor = fragmentColor * texture(uniformTextures[1], fragmentTextureCoordinates); break;
+            case 2: textureColor = fragmentColor * texture(uniformTextures[2], fragmentTextureCoordinates); break;
+            case 3: textureColor = fragmentColor * texture(uniformTextures[3], fragmentTextureCoordinates); break;
+            case 4: textureColor = fragmentColor * texture(uniformTextures[4], fragmentTextureCoordinates); break;
+            case 5: textureColor = fragmentColor * texture(uniformTextures[5], fragmentTextureCoordinates); break;
+            case 6: textureColor = fragmentColor * texture(uniformTextures[6], fragmentTextureCoordinates); break;
+            case 7: textureColor = fragmentColor * texture(uniformTextures[7], fragmentTextureCoordinates); break;
+        }
+    } else {
+        textureColor = fragmentColor;
     }
 
     if (textureColor.a < 0.5) {
