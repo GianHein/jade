@@ -9,8 +9,11 @@ public class PickingTexture {
     private int pickingTextureId;
     private int fbo;
     private int depthTexture;
+    private int width, height;
 
     public PickingTexture(int width, int height) {
+        this.width = width;
+        this.height = height;
         if (!init(width, height)) {
             assert false : "Error initializing picking texture";
         }
@@ -73,5 +76,13 @@ public class PickingTexture {
         glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, pixels);
 
         return (int)(pixels[0]) - 1;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
