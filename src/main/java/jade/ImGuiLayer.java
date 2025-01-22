@@ -46,6 +46,13 @@ public class ImGuiLayer {
         io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
         io.setBackendPlatformName("imgui_java_impl_glfw");
 
+        glfwSetScrollCallback(glfwWindow, (window, xOffset, yOffset) -> {
+            io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
+            io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
+
+            MouseListener.mouseScrollCallback(window, xOffset, yOffset);
+        });
+
         // ------------------------------------------------------------
         // Fonts configuration
         // Read: https://raw.githubusercontent.com/ocornut/imgui/master/docs/FONTS.txt

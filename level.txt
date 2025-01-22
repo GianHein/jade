@@ -8,8 +8,8 @@
         "properties": {
           "color": {
             "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
+            "y": 0.99999,
+            "z": 0.99999,
             "w": 1.0
           },
           "sprite": {
@@ -63,8 +63,8 @@
         "type": "components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 1.0,
-            "y": 0.0,
+            "x": 0.36799943,
+            "y": 1.0,
             "z": 0.0,
             "w": 1.0
           },

@@ -1,5 +1,6 @@
 package components;
 
+import jade.Camera;
 import jade.Window;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -10,17 +11,19 @@ public class GridLines extends Component {
 
     @Override
     public void update(float deltaTime) {
-        Vector2f cameraPosition = Window.getScene().getCamera().position;
-        Vector2f projectionSize = Window.getScene().getCamera().getProjectionSize();
+        Camera camera = Window.getScene().getCamera();
 
-        int firstX = ((int) (cameraPosition.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH;
-        int firstY = ((int) (cameraPosition.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
+        Vector2f cameraPosition = camera.position;
+        Vector2f projectionSize = camera.getProjectionSize();
 
-        int numVerticalLines = (int) (projectionSize.x / Settings.GRID_WIDTH) + 2;
-        int numHorizontalLines = (int) (projectionSize.y / Settings.GRID_HEIGHT) + 2;
+        int firstX = ((int)(cameraPosition.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH;
+        int firstY = ((int)(cameraPosition.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
 
-        int width = (int) projectionSize.x + Settings.GRID_WIDTH * 2;
-        int height = (int) projectionSize.y + Settings.GRID_HEIGHT * 2;
+        int numVerticalLines = (int)(projectionSize.x * camera.getZoom() / Settings.GRID_WIDTH) + 2;
+        int numHorizontalLines = (int)(projectionSize.y * camera.getZoom() / Settings.GRID_HEIGHT) + 2;
+
+        int width = (int)(projectionSize.x * camera.getZoom()) + Settings.GRID_WIDTH * 2;
+        int height = (int)(projectionSize.y * camera.getZoom()) + Settings.GRID_HEIGHT * 2;
 
         int maxLines = Math.max(numVerticalLines, numHorizontalLines);
         Vector3f color = new Vector3f(1.0f, 0.0f, 1.0f);

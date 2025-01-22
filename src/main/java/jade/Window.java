@@ -164,6 +164,8 @@ public class Window {
             this.imGuiLayer.updateImGui(deltaTime, currentScene);
             glfwSwapBuffers(glfwWindow);
 
+            MouseListener.endFrame();
+
             endTime = (float)glfwGetTime();
             deltaTime = endTime - beginTime;
             beginTime = endTime;
