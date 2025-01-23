@@ -1,6 +1,7 @@
 package editor;
 
 import Scenes.Scene;
+import components.NonPickable;
 import imgui.ImGui;
 import jade.GameObject;
 import jade.MouseListener;
@@ -27,7 +28,13 @@ public class PropertiesWindow {
 
             if (x >= 0 && x <= pickingTexture.getWidth() && y >= 0 && y <= pickingTexture.getHeight()) {
                 int gameObjectId = pickingTexture.readPixel(x, y);
-                activeGameObject = currentScene.getGameObject(gameObjectId);
+                GameObject pickedGameObject = currentScene.getGameObject(gameObjectId);
+
+                if (pickedGameObject != null && pickedGameObject.getComponent(NonPickable.class) == null) {
+                    activeGameObject = pickedGameObject;
+                } else if (pickedGameObject == null && !MouseListener.isDragging()) {
+                    activeGameObject = null;
+                }
             }
 
             this.debounce = 0.4f;
