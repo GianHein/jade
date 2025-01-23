@@ -150,4 +150,8 @@ public class ImGuiLayer {
 
         ImGui.dockSpaceOverViewport(ImGui.getMainViewport());
     }
+
+    public PropertiesWindow getPropertiesWindow() {
+        return this.propertiesWindow;
+    }
 }

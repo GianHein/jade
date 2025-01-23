@@ -3,6 +3,7 @@ package renderer;
 import components.SpriteRenderer;
 import jade.Window;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import util.AssetPool;
@@ -180,6 +181,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
             }
         }
 
+        boolean isRotated = spriteRenderer.gameObject.transform.rotation != 0.0f;
+        Matrix4f transformMatrix = new Matrix4f().identity();
+
+        if (isRotated) {
+            transformMatrix.translate(spriteRenderer.gameObject.transform.position.x, spriteRenderer.gameObject.transform.position.y, 0.0f);
+            transformMatrix.rotate((float)Math.toRadians(spriteRenderer.gameObject.transform.rotation), 0, 0, 1);
+            transformMatrix.scale(spriteRenderer.gameObject.transform.scale.x, spriteRenderer.gameObject.transform.scale.y, 1.0f);
+        }
+
         // Add vertices with appropriate properties
         float xAdd = 1.0f;
         float yAdd = 1.0f;
@@ -189,9 +199,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
             if (i == 2) xAdd = 0.0f;
             if (i == 3) yAdd = 1.0f;
 
+            Vector4f currentPosition = new Vector4f(spriteRenderer.gameObject.transform.position.x + (xAdd * spriteRenderer.gameObject.transform.scale.x), spriteRenderer.gameObject.transform.position.y + (yAdd * spriteRenderer.gameObject.transform.scale.y), 0.0f, 1.0f);
+
+            if (isRotated) {
+                currentPosition = new Vector4f(xAdd, yAdd, 0,1 ).mul(transformMatrix);
+            }
+
             // Load position
-            vertices[offset] = spriteRenderer.gameObject.transform.position.x + (xAdd * spriteRenderer.gameObject.transform.scale.x);
-            vertices[offset + 1] = spriteRenderer.gameObject.transform.position.y + (yAdd * spriteRenderer.gameObject.transform.scale.y);
+            vertices[offset] = currentPosition.x;
+            vertices[offset + 1] = currentPosition.y;
 
             // Load color
             vertices[offset + 2] = color.x;
