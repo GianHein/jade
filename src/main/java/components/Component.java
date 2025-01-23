@@ -1,5 +1,6 @@
 package components;
 
+import editor.JImGui;
 import imgui.ImGui;
 import jade.GameObject;
 import org.joml.Vector2f;
@@ -36,16 +37,12 @@ public abstract class Component {
 
                 if (type == int.class) {
                     int val = (int) value;
-                    int[] imInt = {val};
-
-                    if (ImGui.dragInt(name + ": ", imInt)) field.set(this, imInt[0]);
+                    field.set(this, JImGui.drawIntControl(name, val));
                 }
 
                 if (type == float.class) {
                     float val = (float) value;
-                    float[] imFloat = {val};
-
-                    if (ImGui.dragFloat(name + ": ", imFloat)) field.set(this, imFloat[0]);
+                    field.set(this, JImGui.drawFloatControl(name, val));
                 }
 
                 if (type == boolean.class) {
@@ -56,9 +53,7 @@ public abstract class Component {
 
                 if (type == Vector2f.class) {
                     Vector2f val = (Vector2f) value;
-                    float[] imVec = {val.x, val.y};
-
-                    if (ImGui.dragFloat2(name + ": ", imVec)) val.set(imVec[0], imVec[1]);
+                    JImGui.drawVec2Control(name, val);
                 }
 
                 if (type == Vector3f.class) {

@@ -1,6 +1,7 @@
 package jade;
 
 import components.Component;
+import imgui.ImGui;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -12,16 +13,13 @@ public class GameObject {
 
     private String name;
     private List<Component> components;
-    public Transform transform;
-    private int zIndex;
+    public transient Transform transform;
 
     private boolean doSerialization = true;
 
-    public GameObject(String name, Transform transform, int zIndex) {
+    public GameObject(String name) {
         this.name = name;
         this.components = new ArrayList<>();
-        this.transform = transform;
-        this.zIndex = zIndex;
 
         this.uid = ID_COUNTER++;
     }
@@ -71,12 +69,8 @@ public class GameObject {
 
     public void imgui() {
         for (Component component : components) {
-            component.imgui();
+            if (ImGui.collapsingHeader(component.getClass().getSimpleName())) component.imgui();
         }
-    }
-
-    public int zIndex() {
-        return this.zIndex;
     }
 
     public static void init(int maxId) {
