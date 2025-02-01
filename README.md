@@ -21,7 +21,7 @@ I followed the tutorial series and completed the code-along for the first **36 e
 
 ## License
 
-This project is open source. Feel free to use, modify, or distribute it under the terms of your preferred open-source license.
+This project is open source. Feel free to use, modify, or distribute it under the terms of the MIT License.
 
 ---
 
